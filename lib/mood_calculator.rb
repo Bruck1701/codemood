@@ -6,9 +6,11 @@ class MoodCalculator
   end
 
   def run track_list, commit_list
+    
     while has_tracks track_list
       track = track_list[@track_index]
       process_track track, commit_list
+ 
     end
     @grouping.values.sort_by {|c| -c[:count]}
   end
@@ -18,30 +20,30 @@ class MoodCalculator
   end
 
   def process_track track, commit_list
-    if has_commits commit_list and
-        not handle_if_match commit_list[@commit_index], track
-      @commit_index += 1
+    if has_commits commit_list and  not handle_if_match commit_list[@commit_index], track
+        @commit_index += 1
     else
-      @track_index += 1
+       @track_index += 1
     end
   end
 
   def has_commits commit_list
-    @commit_index < commit_list.size
+     @commit_index < commit_list.size
   end
 
   def handle_if_match commit, track
     delta = diff_hours(commit[:timestamp], track[:timestamp])
-    if delta >= 0 and delta < 2
+     if delta >= 0 and delta < 2
       create_entry_if_needed track
       @grouping[track[:music_id]][:count] += 1
-    else
+     else
       return false
-    end
-    return true
+     end
+      return true
   end
 
   def create_entry_if_needed track
+    
     if not @grouping.key? track[:music_id]
       @grouping[track[:music_id]] = {
         music_id: track[:music_id],
@@ -49,6 +51,7 @@ class MoodCalculator
         artist: track[:artist],
         count: 0,
       }
+      
     end
   end
 

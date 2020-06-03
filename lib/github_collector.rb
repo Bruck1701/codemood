@@ -68,6 +68,12 @@ class CommitFetcher
     end
   end
 
+
+
+ # Some say it is not good to catch general exceptions.. Who am I to judge? :)
+ # 
+ # Ryan Davis’s Ruby QuickRef says (without explanation):
+ # Don’t rescue Exception. EVER. or I will stab you.
   def fetch_next_commit_page 
     retries = 0
     error = nil
